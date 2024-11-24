@@ -19,12 +19,22 @@ int execute_commands(char** args) {
     } else if (pid < 0) {
         // error with forking:
         perror("error forking");
+        return 1;
     } else {
         // parent process:
         do {
             waitpid(pid, &status_code, WUNTRACED);
         } while (WIFEXITED(status_code) == 0 && WIFSIGNALED(status_code) == 0);
+
+        // check if terminated by a signal
+        if (WIFSIGNALED(status_code)) {
+            fprintf(stderr, "Process terminated by signal %d\n", WTERMSIG(status_code));
+        }
+
+        // return status
+        return WIFEXITED(status_code) ? WEXITSTATUS(status_code) : 1;
     }
 
+    // return error
     return 1;
 }

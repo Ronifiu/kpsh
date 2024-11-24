@@ -13,6 +13,7 @@ int my_cd(char **args);
 // prints current working directory
 int my_pwd(char **args);
 
+
 /*---executes the given commands---*/
 int handle_input(char** args) {
 	// the implemented commands:
@@ -32,12 +33,21 @@ int handle_input(char** args) {
 	// this built in function handling from source 1
 	// if nothing was entered
 	if (args[0] == NULL) 
-		return 1;
+		return 0;
+
+	// checking for pipes or I/O redirection:
+	int status = redirect_checker(args);
+	if (status != 0) {
+		return status;
+	}
+
 	// if the command is built in:
 	for (int i=0; i < sizeof(built_in_commands) / sizeof(char *); i++) {
 		if (strcmp(args[0], built_in_commands[i]) == 0)
 			return ((*built_in__functions[i])(args));
 	}
+
+
 	
 	// if the command is not built in:
 	return (execute_commands(args));
@@ -45,18 +55,28 @@ int handle_input(char** args) {
 
 int my_exit(char **args) {
 	// exists the program
-	return 0;
+	exit(EXIT_SUCCESS);
 }
 
 int my_echo(char **args) {
+	if (args == NULL) {
+		fprintf(stderr, "Error: args is NULL\n");
+		return 1;
+	}
+	
+
+	// redirect input:
+	int status = redirect_checker(args);
+
 	int i = 1;
 	// loop through args and prints
 	while (args[i] != NULL) {
-		printf("%s ", args[i]);
+		dprintf(STDOUT_FILENO, "%s ", args[i]);
 		i++;
 	}
-	printf("\n");
-	return 1;
+	dprintf(STDOUT_FILENO, "\n");
+	
+	return status;
 }
 
 int my_cd(char **args) {
@@ -78,12 +98,17 @@ int my_cd(char **args) {
 			perror("cd");
 		}
 	}
-	return 1;
+	return 0;
 }
 
 int my_pwd(char** args) {
+	// redirect input:
+	int status = redirect_checker(args);
 	char cwd[1024];
-	getcwd(cwd, sizeof(cwd));
-	printf("%s\n", cwd);
-	return 1;
+	if (getcwd(cwd, sizeof(cwd)) == NULL) {
+		perror("getcwd");
+		return 1;
+	}
+	dprintf(STDOUT_FILENO, "%s\n", cwd);
+	return status;
 }
