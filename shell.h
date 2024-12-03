@@ -22,8 +22,10 @@ struct Node {
 
 /*---PROTOTYPES---*/
 void shell_interactive(void);
+void shell_non_interactive(void);
 void get_prompt();
 char* read_line();
+char* read_stream();
 char** parse_line(char* line);
 int handle_input(char** args);
 int execute_commands(char** args);

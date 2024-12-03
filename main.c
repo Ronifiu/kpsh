@@ -8,6 +8,7 @@ int main() {
 	} else {
 		// shell is running in non-interactive mode
 		// execute commands from script or batch file
+		shell_non_interactive();
 	}
 
 	return 0;
