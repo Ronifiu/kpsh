@@ -36,7 +36,10 @@ int handle_input(char** args) {
 		return 0;
 
 	// checking for pipes or I/O redirection:
+
 	int status = redirect_checker(args);
+
+
 	if (status != 0) {
 		return status;
 	}
@@ -65,8 +68,6 @@ int my_echo(char **args) {
 	}
 	
 
-	// redirect input:
-	int status = redirect_checker(args);
 
 	int i = 1;
 	// loop through args and prints
@@ -76,7 +77,7 @@ int my_echo(char **args) {
 	}
 	dprintf(STDOUT_FILENO, "\n");
 	
-	return status;
+	return 0;
 }
 
 int my_cd(char **args) {
@@ -103,12 +104,11 @@ int my_cd(char **args) {
 
 int my_pwd(char** args) {
 	// redirect input:
-	int status = redirect_checker(args);
 	char cwd[1024];
 	if (getcwd(cwd, sizeof(cwd)) == NULL) {
 		perror("getcwd");
 		return 1;
 	}
 	dprintf(STDOUT_FILENO, "%s\n", cwd);
-	return status;
+	return 0;
 }

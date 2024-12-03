@@ -12,15 +12,21 @@ void shell_interactive() {
 
 		status = handle_input(args); // executing the commands
 
+		if (status < 0) {
+			fprintf(stderr, "Command '%s' not found\n", args[0]);
+		}
+
 		// freeing allocated memory in the heap
 		// to avoid memory leaks
 		free(line);
 		free(args);
 		
-		if (status != 0) {
+
+		if (status > 0) {
 			fprintf(stderr, "Command failed with status: %d\n", status);
 			exit(status);
 		}
+		
 	}
-	while(status == 0);
+	while(status <= 0);
 }
