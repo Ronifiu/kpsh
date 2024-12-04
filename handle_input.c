@@ -103,7 +103,6 @@ int my_cd(char **args) {
 }
 
 int my_pwd(char** args) {
-	// redirect input:
 	char cwd[1024];
 	if (getcwd(cwd, sizeof(cwd)) == NULL) {
 		perror("getcwd");

@@ -1,5 +1,6 @@
 #include "shell.h"
 
+/*---prints the prompt for the user---*/
 void get_prompt() {
 	if (isatty(STDOUT_FILENO)) {
 		char cwd[1024];

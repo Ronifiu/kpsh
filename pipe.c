@@ -1,5 +1,6 @@
 #include "shell.h"
 
+/*---handles piping redirector---*/
 int pipe_function(char** args, int index) {
     if (args[index + 1] == NULL) {
         fprintf(stderr, "Syntax error: expected file after '|'\n");

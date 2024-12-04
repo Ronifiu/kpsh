@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /*---handling shell running in script mode---*/
-void shell_non_interactive(void) {
+void shell_non_interactive() {
     // mostly same as shell_interactive
     int status = 0; // for the loop
 

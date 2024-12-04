@@ -13,16 +13,9 @@
 /*---MACROS---*/
 #define DELIM " \t\r\n\a\""
 
-/*---STRUCTURES---*/
-struct Node {
-	char *dir;
-	struct Node *next;
-};
-
-
 /*---PROTOTYPES---*/
-void shell_interactive(void);
-void shell_non_interactive(void);
+void shell_interactive();
+void shell_non_interactive();
 void get_prompt();
 char* read_line();
 char* read_stream();

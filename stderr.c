@@ -1,5 +1,6 @@
 #include "shell.h"
 
+/*---handles stderr write redirector---*/
 int stderr_write(char **args, int index) {
     // Handle syntax error:
     if (args[index + 1] == NULL) {
@@ -28,6 +29,7 @@ int stderr_write(char **args, int index) {
     return 0;
 }
 
+/*---handles stderr append redirector---*/
 int stderr_append(char** args, int index) {
     // handle syntax error
     if (args[index + 1] == NULL) {

@@ -1,5 +1,6 @@
 #include "shell.h"
 
+/*---handles stdout write redirector---*/
 int stdout_write(char** args, int index) {
     // handle syntax error
     if (args[index + 1] == NULL) {
@@ -49,7 +50,7 @@ int stdout_write(char** args, int index) {
 
 
 
-
+/*---handles stdout append redirector---*/
 int stdout_append(char** args, int index) {
     // handle syntax error
     if (args[index + 1] == NULL) {
